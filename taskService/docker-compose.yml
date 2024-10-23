@@ -13,6 +13,21 @@ services:
     networks:
       - task-postgres-network
 
+  task-service:
+    build: .
+    container_name: task-service
+    ports:
+      - 8083:8083
+    environment:
+      USER_SERVICE_URL: http://user-service:8082
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-task:5432/task_db
+      SPRING_DATASOURCE_USERNAME: task_service
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - postgres
+    networks:
+      - task-postgres-network
+
 networks:
   task-postgres-network:
 
