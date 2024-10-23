@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-user
+    environment:
+      POSTGRES_USER: user_service             # username
+      POSTGRES_PASSWORD: password              # password
+      POSTGRES_DB: user_db                     # database name
+    ports:
+      - "5435:5432"                            # Expose port 5435
+    volumes:
+      - postgres_user_data:/var/lib/postgresql/data  # Persist data in a Docker volume
+    networks:
+      - user-postgres-network
+
+  user-service:
+    build: .
+    container_name: user-service
+    ports:
+      - "8082:8082"                            # Expose port 8082
+    #environment:
+      #SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/user_db
+      #SPRING_DATASOURCE_USERNAME: user_service
+      #SPRING_DATASOURCE_PASSWORD: password
+      #SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      #SPRING_FLYWAY_ENABLED: true
+      #SPRING_FLYWAY_LOCATIONS: classpath:db/migration
+    depends_on:
+      - postgres
+    networks:
+      - user-postgres-network
+
+networks:
+  user-postgres-network:                     # Define the network
+
+volumes:
+  postgres_user_data:
