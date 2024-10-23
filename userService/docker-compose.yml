@@ -29,9 +29,12 @@ services:
       - postgres
     networks:
       - user-postgres-network
+      - task-user-network
 
 networks:
   user-postgres-network:                     # Define the network
+  task-user-network:
+    external: true
 
 volumes:
   postgres_user_data:
