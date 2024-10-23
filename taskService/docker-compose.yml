@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-task
+    environment:
+      POSTGRES_DB: task_db
+      POSTGRES_USER: task_service
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_task_data:/var/lib/postgresql/data
+    networks:
+      - task-postgres-network
+
+networks:
+  task-postgres-network:
+
+volumes:
+  postgres_task_data:
