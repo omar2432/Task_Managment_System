@@ -51,7 +51,7 @@ public class TaskController {
 
 
     @PostMapping("/assign")
-    public ResponseEntity<Task> assignTaskToUser(TaskAssignmentRequest taskAssignmentRequest){
+    public ResponseEntity<Task> assignTaskToUser(@RequestBody TaskAssignmentRequest taskAssignmentRequest){
        return ResponseEntity.ok(taskService.assignTask(taskAssignmentRequest));
     }
 

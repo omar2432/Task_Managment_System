@@ -1,8 +1,10 @@
 package com.hitachi.taskService.service;
 
 import com.hitachi.taskService.DTO.TaskAssignmentRequest;
+import com.hitachi.taskService.DTO.UserResponse;
 import com.hitachi.taskService.entity.Task;
 import com.hitachi.taskService.repository.TaskRepository;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,14 @@ import java.time.LocalDateTime;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserClient userClient;
+
 
     @Autowired
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository, UserClient userClient){
+
         this.taskRepository=taskRepository;
+        this.userClient=userClient;
     }
     public Task createTask(Task task){
         if(task.getStatus().equals(Task.Status.COMPLETED)){
@@ -49,7 +55,13 @@ public class TaskService {
         Task task=getTask(taskAssignmentRequest.getTaskId());
         //TODO get user from userService
 
+        try {
+            UserResponse user= userClient.getUserById(taskAssignmentRequest.getUserId()).getBody();
+            System.out.println("found user with id = " +user.getId());
 
+        } catch (FeignException.NotFound e) {
+            throw new RuntimeException("User Not found");
+        }
 
         //assign task
         task.setAssignedUserId(taskAssignmentRequest.getUserId());
