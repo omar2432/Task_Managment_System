@@ -15,13 +15,15 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserClient userClient;
+    private final TaskAssignmentMessagePublisher taskAssignmentMessagePublisher;
 
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, UserClient userClient){
+    public TaskService(TaskRepository taskRepository, UserClient userClient,TaskAssignmentMessagePublisher taskAssignmentMessagePublisher){
 
         this.taskRepository=taskRepository;
         this.userClient=userClient;
+        this.taskAssignmentMessagePublisher=taskAssignmentMessagePublisher;
     }
     public Task createTask(Task task){
         if(task.getStatus().equals(Task.Status.COMPLETED)){
@@ -53,8 +55,8 @@ public class TaskService {
 
     public Task assignTask(TaskAssignmentRequest taskAssignmentRequest){
         Task task=getTask(taskAssignmentRequest.getTaskId());
-        //TODO get user from userService
 
+        //get user from userService
         try {
             UserResponse user= userClient.getUserById(taskAssignmentRequest.getUserId()).getBody();
             System.out.println("found user with id = " +user.getId());
@@ -70,6 +72,7 @@ public class TaskService {
         }
 
         //TODO Notify via RabbitMQ
+        taskAssignmentMessagePublisher.publishTaskAssignment(taskAssignmentRequest);
 
 
         return  taskRepository.save(task);
