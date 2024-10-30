@@ -18,10 +18,11 @@ services:
     container_name: user-service
     ports:
       - "8082:8082"                            # Expose port 8082
-    #environment:
-      #SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/user_db
-      #SPRING_DATASOURCE_USERNAME: user_service
-      #SPRING_DATASOURCE_PASSWORD: password
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/user_db
+      SPRING_DATASOURCE_USERNAME: user_service
+      SPRING_DATASOURCE_PASSWORD: password
+      rabbitmq_queue_taskAssignment: taskAssignmentQueue
       #SPRING_JPA_HIBERNATE_DDL_AUTO: none
       #SPRING_FLYWAY_ENABLED: true
       #SPRING_FLYWAY_LOCATIONS: classpath:db/migration
