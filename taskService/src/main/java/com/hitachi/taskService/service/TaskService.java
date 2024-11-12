@@ -2,6 +2,7 @@ package com.hitachi.taskService.service;
 
 import com.hitachi.taskService.DTO.TaskAssignmentRequest;
 import com.hitachi.taskService.DTO.UserResponse;
+import com.hitachi.taskService.common.MessageConstants;
 import com.hitachi.taskService.entity.Task;
 import com.hitachi.taskService.repository.TaskRepository;
 import feign.FeignException;
@@ -33,7 +34,7 @@ public class TaskService {
     }
 
     public Task getTask(long id){
-        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException(MessageConstants.TASK_NOT_FOUND+id));
     }
 
     public Task updateTask(long id,Task newTask){
@@ -49,8 +50,10 @@ public class TaskService {
     }
 
     public void deleteTask(long id){
-        Task task=getTask(id);
-        taskRepository.delete(task);
+        if (!taskRepository.existsById(id)) {
+            throw new RuntimeException(MessageConstants.TASK_NOT_FOUND+id);
+        }
+        taskRepository.deleteById(id);
     }
 
     public Task assignTask(TaskAssignmentRequest taskAssignmentRequest){
@@ -59,10 +62,10 @@ public class TaskService {
         //get user from userService
         try {
             UserResponse user= userClient.getUserById(taskAssignmentRequest.getUserId()).getBody();
-            System.out.println("found user with id = " +user.getId());
+            System.out.println(MessageConstants.USER_FOUND +user.getId());
 
         } catch (FeignException.NotFound e) {
-            throw new RuntimeException("User Not found");
+            throw new RuntimeException(MessageConstants.USER_NOT_FOUND);
         }
 
         //assign task
@@ -71,7 +74,7 @@ public class TaskService {
             task.setStatus(Task.Status.ASSIGNED);
         }
 
-        //TODO Notify via RabbitMQ
+        // Notify via RabbitMQ
         taskAssignmentMessagePublisher.publishTaskAssignment(taskAssignmentRequest);
 
 

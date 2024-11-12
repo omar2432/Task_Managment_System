@@ -14,7 +14,8 @@ public class Task {
     public enum Status {
         ASSIGNED,
         NOTASSIGNED,
-        COMPLETED
+        COMPLETED,
+        ARCHIVED
     }
 
     @Id
