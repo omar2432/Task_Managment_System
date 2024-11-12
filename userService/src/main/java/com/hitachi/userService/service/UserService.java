@@ -1,5 +1,6 @@
 package com.hitachi.userService.service;
 
+import com.hitachi.userService.common.MessageConstants;
 import com.hitachi.userService.entity.User;
 import com.hitachi.userService.exception.UserNotFoundException;
 import com.hitachi.userService.repository.UserRepository;
@@ -24,14 +25,14 @@ public class UserService {
 
 
     public User getUserById(long id){
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with the ID "+id));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(MessageConstants.USER_NOT_FOUND +id));
     }
 
     public User updateUser(long id,User userDetails){
 
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException("User with id " + id + " not found.");
+            throw new UserNotFoundException(String.format(MessageConstants.USER_NOT_FOUND_WITH_ID, id));
         }
 
         User user = optionalUser.get();
@@ -44,12 +45,10 @@ public class UserService {
     }
 
     public void deleteUser(long id){
-
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException(MessageConstants.USER_NOT_FOUND +id);
+        }
         userRepository.deleteById(id);
     }
 
-    public void deleteUser(User user){
-
-        userRepository.delete(user);
-    }
 }

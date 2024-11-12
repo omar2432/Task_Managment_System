@@ -1,8 +1,10 @@
 package com.hitachi.userService.controller;
 
+import com.hitachi.userService.common.MessageConstants;
 import com.hitachi.userService.entity.User;
 import com.hitachi.userService.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -10,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(MessageConstants.API_BASE_PATH)
 public class UserController {
 
     private final UserService userService;
@@ -19,34 +21,27 @@ public class UserController {
         this.userService=userService;
     }
 
-    @PostMapping
+    @PostMapping(MessageConstants.CREATE_USER_PATH)
     public ResponseEntity<User> createUser(@RequestBody User user){
         User createdUser = userService.createUser(user);
-        URI location= ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(createdUser.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(createdUser);
+        return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping(MessageConstants.GET_USER_BY_ID_PATH)
     public ResponseEntity<User> getUserById(@PathVariable long id){
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping(MessageConstants.UPDATE_USER_PATH)
     public ResponseEntity<User> updateUser(@PathVariable long id,@RequestBody User user){
         return ResponseEntity.ok(userService.updateUser(id,user));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(MessageConstants.DELETE_USER_PATH)
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
-        User user=userService.getUserById(id);
-        userService.deleteUser(user);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
