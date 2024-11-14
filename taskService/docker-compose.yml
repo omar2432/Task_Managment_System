@@ -25,6 +25,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_RABBITMQ_HOST: rabbitmq
       spring_security_oauth2_client_provider_keycloak_token-uri: http://keycloak:8080/realms/task-management-realm/protocol/openid-connect/token
+      spring_security_oauth2_resourceserver_jwt_jwk-set-uri: http://keycloak:8080/realms/task-management-realm/protocol/openid-connect/certs
     depends_on:
       - postgres
     networks:
