@@ -23,6 +23,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-task:5432/task_db
       SPRING_DATASOURCE_USERNAME: task_service
       SPRING_DATASOURCE_PASSWORD: password
+      SPRING_RABBITMQ_HOST: rabbitmq
+      spring_security_oauth2_client_provider_keycloak_token-uri: http://keycloak:8080/realms/task-management-realm/protocol/openid-connect/token
     depends_on:
       - postgres
     networks:
