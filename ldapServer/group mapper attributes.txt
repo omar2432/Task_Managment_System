@@ -1,0 +1,37 @@
+***********Create new mapper***********
+
+Name
+group-mapper
+
+Mapper type
+group-ldap-mapper
+
+LDAP Groups DN
+ou=group,o=GTS,c=EG,dc=hitachi,dc=com
+
+Group Name LDAP Attribute
+cn
+
+Group Object Classes
+posixGroup
+
+Preserve Group Inheritance
+off
+
+Membership LDAP Attribute
+memberUid
+
+Membership Attribute Type
+UID
+
+Membership User LDAP Attribute
+uid
+
+Mode
+LDAP_ONLY
+
+User Groups Retrieve Strategy
+LOAD_GROUPS_BY_MEMBER_ATTRIBUTE
+
+Member-Of LDAP Attribute
+(LEAVE IT EMPTY as it does not apply to my current LDAP schema)

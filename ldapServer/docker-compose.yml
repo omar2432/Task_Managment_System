@@ -1,0 +1,24 @@
+services:
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap-server
+    environment:
+      LDAP_ORGANISATION: "hitachi"
+      LDAP_DOMAIN: "hitachi.com"
+      LDAP_ADMIN_PASSWORD: "adminpassword"
+    ports:
+      - "389:389"  # LDAP port
+      - "636:636"  # LDAPS port (SSL)
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+    networks:
+      - ldap-network
+
+volumes:
+  ldap-data:
+  ldap-config:
+
+networks:
+  ldap-network:
+    external: true

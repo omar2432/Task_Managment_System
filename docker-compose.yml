@@ -42,11 +42,14 @@ services:
     networks:
       - keycloak-network
       - task-user-network
+      - ldap-network
     restart: unless-stopped
 
 networks:
   keycloak-network:
   task-user-network:
+    external: true
+  ldap-network:
     external: true
 
 volumes:

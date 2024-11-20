@@ -1,0 +1,23 @@
+dn: cn=dev,ou=group,o=GTS,c=EG,dc=hitachi,dc=com
+cn: dev
+gidnumber: 5003
+memberuid:joe
+objectclass: posixGroup
+
+dn: cn=sysadmin,ou=group,o=GTS,c=EG,dc=hitachi,dc=com
+cn: sysadmin
+gidnumber: 5004
+memberuid:steve
+objectclass: posixGroup
+
+dn: cn=dev,ou=group,o=RCS,c=FR,dc=hitachi,dc=com
+cn: dev
+gidnumber: 5000
+memberuid:john
+objectclass: posixGroup
+
+dn: cn=sysadmin,ou=group,o=RCS,c=FR,dc=hitachi,dc=com
+cn: sysadmin
+gidnumber: 5001
+memberuid:davis
+objectclass: posixGroup

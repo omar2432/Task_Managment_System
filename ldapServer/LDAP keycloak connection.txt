@@ -1,0 +1,49 @@
+
+Vendor
+Other
+
+
+*******Connection and authentication settings*******
+
+
+Connection URL
+ldap://openldap-server:389
+
+Bind type
+simple
+
+Bind DN
+cn=admin,dc=hitachi,dc=com
+
+Bind credentials
+adminpassword
+
+
+*******LDAP searching and updating*******
+
+
+Edit mode
+READ_ONLY
+
+Users DN
+ou=people,o=GTS,c=EG,dc=hitachi,dc=com
+
+Username LDAP attribute
+uid
+
+RDN LDAP attribute
+uid
+
+UUID LDAP attribute
+uid
+
+User object classes
+inetOrgPerson, posixAccount           
+
+Search scope 
+Subtree
+
+
+
+
+

@@ -1,0 +1,4 @@
+dn: cn=sysadmin,ou=group,o=GTS,c=EG,dc=hitachi,dc=com
+changetype: modify
+add: memberUid
+memberUid: kiro

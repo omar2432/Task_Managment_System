@@ -1,0 +1,14 @@
+dn: uid=kiro,ou=people,o=GTS,c=EG,dc=hitachi,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: kiro
+sn: saad
+givenName: kiro
+cn: kiro saad
+displayName: kiro saad
+uidNumber: 10012
+gidNumber: 5012
+userPassword: pass123
+gecos: kiro saad
+loginShell: /bin/bash
+homeDirectory: /home/kiro
