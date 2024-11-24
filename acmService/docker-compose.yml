@@ -1,0 +1,15 @@
+services:
+  acm-service:
+    build: .
+    container_name: acm-service
+    ports:
+      - 8084:8084
+    environment:
+      spring_security_oauth2_client_provider_keycloak_token-uri: http://keycloak:8080/realms/task-management-realm/protocol/openid-connect/token
+      spring_security_oauth2_server_url: http://keycloak:8080
+    networks:
+      - task-user-network
+
+networks:
+  task-user-network:
+    external: true
