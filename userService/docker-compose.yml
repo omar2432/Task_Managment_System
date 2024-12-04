@@ -37,6 +37,9 @@ services:
       SPRING_DATASOURCE_USERNAME: user_service
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_DATASOURCE_TEST_URL: jdbc:postgresql://postgres-user-test:5432/user_test_db
+      SPRING_DATASOURCE_TEST_USERNAME: test
+      SPRING_DATASOURCE_TEST_PASSWORD: password
       rabbitmq_queue_taskAssignment: taskAssignmentQueue
       spring_security_oauth2_resourceserver_jwt_jwk-set-uri: http://keycloak:8080/realms/task-management-realm/protocol/openid-connect/certs
       #SPRING_JPA_HIBERNATE_DDL_AUTO: none
