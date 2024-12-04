@@ -3,6 +3,7 @@ package com.hitachi.userService.service;
 import com.hitachi.userService.common.MessageConstants;
 import com.hitachi.userService.entity.User;
 import com.hitachi.userService.exception.UserNotFoundException;
+import com.hitachi.userService.mapper.UserMapper;
 import com.hitachi.userService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,13 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
 
     @Autowired
-    UserService(UserRepository userRepository){
+    UserService(UserRepository userRepository, UserMapper userMapper){
         this.userRepository=userRepository;
+        this.userMapper=userMapper;
     }
 
     public User createUser(User user){
@@ -36,10 +40,8 @@ public class UserService {
         }
 
         User user = optionalUser.get();
-        user.setName(userDetails.getName());
-        user.setEmail(userDetails.getEmail());
-        user.setAge(userDetails.getAge());
-        user.setQualification(userDetails.getQualification());
+
+        userMapper.updateEntityFromEntity(userDetails,user);
 
         return userRepository.save(user);
     }
@@ -50,5 +52,4 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
-
 }

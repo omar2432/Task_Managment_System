@@ -13,6 +13,20 @@ services:
     networks:
       - user-postgres-network
 
+  user-test-postgres:
+    image: postgres:15
+    container_name: postgres-user-test
+    environment:
+      POSTGRES_USER: test                     # Username for testing
+      POSTGRES_PASSWORD: password             # Password for testing
+      POSTGRES_DB: user_test_db               # Test database name
+    ports:
+      - "5437:5432"
+    volumes:
+      - postgres_user_test_data:/var/lib/postgresql/data  # Separate volume for test data
+    networks:
+      - user-postgres-network
+
   user-service:
     build: .
     container_name: user-service
@@ -41,3 +55,4 @@ networks:
 
 volumes:
   postgres_user_data:
+  postgres_user_test_data:

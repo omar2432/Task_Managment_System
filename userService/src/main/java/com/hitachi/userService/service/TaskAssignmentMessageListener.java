@@ -2,11 +2,12 @@ package com.hitachi.userService.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hitachi.userService.DTO.TaskAssignmentMessage;
+import com.hitachi.userService.exchange.response.TaskAssignmentMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class TaskAssignmentMessageListener {
@@ -27,6 +28,9 @@ public class TaskAssignmentMessageListener {
                     +taskAssignmentMessage.getUserId()
                     +" ******");
         } catch (JsonProcessingException e) {
+            // Handle the exception
+            e.printStackTrace();
+        }catch (IOException e) {
             // Handle the exception
             e.printStackTrace();
         }
