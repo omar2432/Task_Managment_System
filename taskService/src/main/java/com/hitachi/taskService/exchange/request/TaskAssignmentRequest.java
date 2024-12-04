@@ -1,4 +1,4 @@
-package com.hitachi.taskService.DTO;
+package com.hitachi.taskService.exchange.request;
 
 public class TaskAssignmentRequest {
     private long taskId;

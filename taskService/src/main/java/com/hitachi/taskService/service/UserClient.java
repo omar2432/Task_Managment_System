@@ -1,6 +1,6 @@
 package com.hitachi.taskService.service;
 
-import com.hitachi.taskService.DTO.UserResponse;
+import com.hitachi.taskService.exchange.response.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

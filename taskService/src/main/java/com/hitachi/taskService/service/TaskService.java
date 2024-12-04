@@ -1,7 +1,7 @@
 package com.hitachi.taskService.service;
 
-import com.hitachi.taskService.DTO.TaskAssignmentRequest;
-import com.hitachi.taskService.DTO.UserResponse;
+import com.hitachi.taskService.exchange.request.TaskAssignmentRequest;
+import com.hitachi.taskService.exchange.response.UserResponse;
 import com.hitachi.taskService.common.MessageConstants;
 import com.hitachi.taskService.entity.Task;
 import com.hitachi.taskService.repository.TaskRepository;
@@ -106,7 +106,7 @@ public class TaskService {
         taskAssignmentMessagePublisher.publishTaskAssignment(taskAssignmentRequest);
 
 
-        return  taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     private String getAccessToken() {
